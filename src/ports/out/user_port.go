@@ -7,7 +7,7 @@ type UserPort interface {
 
 	FindUserById(id string) (*entities.User, error)
 
-	CreateUser(e entities.User) (*string, error)
+	CreateUser(e entities.User) (string, error)
 
 	UpdateUser(id string, e entities.User) error
 

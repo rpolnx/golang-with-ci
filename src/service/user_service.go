@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"log"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"rpolnx.com.br/golang-with-ci/src/ports/in"
@@ -17,10 +16,9 @@ func (s *userService) GetAllUsers() ([]entities.User, error) {
 
 	if err != nil {
 		log.Println("Error getting all users ", err)
-		return nil, err
 	}
 
-	return users, nil
+	return users, err
 }
 
 func (s *userService) GetOneUser(id string) (*entities.User, error) {
@@ -28,25 +26,19 @@ func (s *userService) GetOneUser(id string) (*entities.User, error) {
 
 	if err != nil {
 		log.Printf("Error getting user id %s with error %v\n", id, err)
-		return nil, err
 	}
 
-	return user, nil
+	return user, err
 }
 
-func (s *userService) PostUser(e entities.User) (*string, error) {
+func (s *userService) PostUser(e entities.User) (string, error) {
 	created, err := s.userPort.CreateUser(e)
 
 	if err != nil {
 		log.Printf("Error creating user with object %v got error %v \n", e, err)
-		return nil, err
 	}
 
-	if created == nil {
-		return nil, errors.New("created user did not returned id")
-	}
-
-	return created, nil
+	return created, err
 }
 
 func (s *userService) PutUser(id string, e entities.User) error {
@@ -54,10 +46,9 @@ func (s *userService) PutUser(id string, e entities.User) error {
 
 	if err != nil {
 		log.Printf("Error updating user id %s got error %v \n", id, err)
-		return err
 	}
 
-	return nil
+	return err
 }
 
 func (s *userService) DeleteUser(id string) error {
@@ -65,10 +56,9 @@ func (s *userService) DeleteUser(id string) error {
 
 	if err != nil {
 		log.Printf("Error deleting user id %s got error %v \n", id, err)
-		return err
 	}
 
-	return nil
+	return err
 }
 
 func InitializeUserService(userPort out.UserPort) in.UserUsecase {

@@ -7,7 +7,7 @@ type UserUsecase interface {
 
 	GetOneUser(id string) (*entities.User, error)
 
-	PostUser(e entities.User) (*string, error)
+	PostUser(e entities.User) (string, error)
 
 	PutUser(id string, e entities.User) error
 

@@ -23,9 +23,9 @@ func (m *UserAdapterMock) FindUserById(id string) (*entities.User, error) {
 	return s, args.Error(1)
 }
 
-func (m *UserAdapterMock) CreateUser(e entities.User) (*string, error) {
+func (m *UserAdapterMock) CreateUser(e entities.User) (string, error) {
 	args := m.Called(e)
-	s, _ := args.Get(0).(*string)
+	s, _ := args.Get(0).(string)
 	return s, args.Error(1)
 }
 
