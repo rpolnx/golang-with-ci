@@ -14,6 +14,6 @@ func (*healthcheckController) GetHealthStatus(c *gin.Context) {
 	})
 }
 
-func InitilizeHealthcheckController() HealthcheckController {
+func InitializeHealthcheckController() HealthcheckController {
 	return &healthcheckController{}
 }
