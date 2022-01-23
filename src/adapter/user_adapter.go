@@ -1,6 +1,7 @@
 package adapter
 
 import (
+	"errors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"rpolnx.com.br/golang-with-ci/src/ports/out"
@@ -25,18 +26,22 @@ func (a userAdapter) FindUserById(id string) (*entities.User, error) {
 	return a.userRepository.FindUserById(mongoId)
 }
 
-func (a userAdapter) CreateUser(e entities.User) (*string, error) {
+func (a userAdapter) CreateUser(e entities.User) (string, error) {
 	result, err := a.userRepository.CreateUser(e)
 
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	id := result.InsertedID.(primitive.ObjectID)
+	id, _ := result.InsertedID.(primitive.ObjectID)
+
+	if id.IsZero() {
+		return "", errors.New("created user did not returned id")
+	}
 
 	hex := id.Hex()
 
-	return &hex, nil
+	return hex, nil
 }
 
 func (a userAdapter) UpdateUser(id string, e entities.User) error {
@@ -46,6 +51,7 @@ func (a userAdapter) UpdateUser(id string, e entities.User) error {
 		return err
 	}
 
+	e.ID = mongoId
 	_, err = a.userRepository.UpsertUser(mongoId, e)
 
 	return err

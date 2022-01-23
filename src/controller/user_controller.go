@@ -46,7 +46,7 @@ func (ctrl *userController) GetOne(c *gin.Context) {
 func (ctrl *userController) Post(c *gin.Context) {
 	var dto entities.User
 	if err := c.ShouldBind(&dto); err != nil {
-		c.JSON(http.StatusBadRequest, util.WrapHttpError(http.StatusBadRequest, "test", c.FullPath()))
+		c.JSON(http.StatusBadRequest, util.WrapHttpError(http.StatusBadRequest, "bad input", c.FullPath()))
 		return
 	}
 
@@ -64,7 +64,7 @@ func (ctrl *userController) Put(c *gin.Context) {
 
 	var dto entities.User
 	if err := c.ShouldBind(&dto); err != nil {
-		c.JSON(http.StatusBadRequest, util.WrapHttpError(http.StatusBadRequest, "test", c.FullPath()))
+		c.JSON(http.StatusBadRequest, util.WrapHttpError(http.StatusBadRequest, "bad input", c.FullPath()))
 		return
 	}
 
