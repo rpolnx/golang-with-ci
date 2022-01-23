@@ -52,7 +52,7 @@ func (r *mongoUserRepository) FindUserById(id primitive.ObjectID) (*entities.Use
 
 	collection := r.client.Database(r.database).Collection(userCollectionName)
 
-	var currentUser *entities.User
+	currentUser := new(entities.User)
 
 	filter := bson.M{"_id": id}
 
