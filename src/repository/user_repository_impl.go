@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
+	"time"
 )
 
 const userCollectionName = "users"
@@ -78,12 +79,20 @@ func (r *mongoUserRepository) UpsertUser(id primitive.ObjectID, entity entities.
 
 	filter := bson.M{"_id": id}
 
+	upsertEntityArg := bson.M{
+		"$set": entity,
+		"$setOnInsert": bson.M{
+			"created_at": time.Now(),
+			"updated_at": time.Now(),
+		},
+	}
+
 	upsert := true
 	var upsertOptions = &options.UpdateOptions{
 		Upsert: &upsert,
 	}
 
-	return collection.UpdateOne(ctx, filter, entity, upsertOptions)
+	return collection.UpdateOne(ctx, filter, upsertEntityArg, upsertOptions)
 }
 
 func (r *mongoUserRepository) DeleteUserById(id primitive.ObjectID) (*mongo.DeleteResult, error) {

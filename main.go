@@ -6,7 +6,7 @@ import (
 	"rpolnx.com.br/golang-with-ci/src/server"
 )
 
-const host = "localhost"
+const host = ""
 const port = "8080"
 
 func main() {
