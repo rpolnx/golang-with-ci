@@ -68,6 +68,8 @@ func (r *mongoUserRepository) CreateUser(entity entities.User) (*mongo.InsertOne
 
 	collection := r.client.Database(r.database).Collection(userCollectionName)
 
+	entity.ID = primitive.NewObjectID()
+
 	return collection.InsertOne(ctx, entity)
 }
 

@@ -123,7 +123,8 @@ func Test_ShouldGetIdErrorWhenCreatingUserAndDidntReceiveAnID(t *testing.T) {
 
 	//Mock Setups Phase
 	data := entities.User{ID: primitive.NewObjectID(), Name: "Vegetta", Age: 10}
-	adapterMock.On("CreateUser", data).Return(new(mongo.InsertOneResult), nil)
+	expectedSendData := data
+	adapterMock.On("CreateUser", expectedSendData).Return(new(mongo.InsertOneResult), nil)
 
 	//Execution Phase
 	createdId, err := userService.CreateUser(data)
@@ -144,7 +145,8 @@ func Test_ShouldGetUnexpectedErrorWhenCreatingUser(t *testing.T) {
 
 	//Mock Setups Phase
 	data := entities.User{ID: primitive.NewObjectID(), Name: "Vegetta", Age: 10}
-	adapterMock.On("CreateUser", data).Return(nil, errors.New("general error create user"))
+	expectedSendData := data
+	adapterMock.On("CreateUser", expectedSendData).Return(nil, errors.New("general error create user"))
 
 	//Execution Phase
 	createdId, err := userService.CreateUser(data)

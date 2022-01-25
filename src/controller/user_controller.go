@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"rpolnx.com.br/golang-with-ci/src/model/entities"
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
 	"rpolnx.com.br/golang-with-ci/src/ports/in"
 	"rpolnx.com.br/golang-with-ci/src/util"
 )
@@ -28,7 +28,9 @@ func (ctrl *userController) GetAll(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, users)
+	list := dto.UserDtoListFromEntity(users)
+
+	c.JSON(http.StatusOK, list)
 }
 
 func (ctrl *userController) GetOne(c *gin.Context) {
@@ -40,35 +42,43 @@ func (ctrl *userController) GetOne(c *gin.Context) {
 		util.HandleUnexpectedError(c, err)
 	}
 
-	c.JSON(http.StatusOK, user)
+	userDto := dto.UserDtoFromEntity(*user)
+
+	c.JSON(http.StatusOK, userDto)
 }
 
 func (ctrl *userController) Post(c *gin.Context) {
-	var dto entities.User
-	if err := c.ShouldBind(&dto); err != nil {
+	userDto := new(dto.UserDTO)
+	if err := c.ShouldBind(userDto); err != nil {
 		c.JSON(http.StatusBadRequest, util.WrapHttpError(http.StatusBadRequest, "bad input", c.FullPath()))
 		return
 	}
 
-	user, err := ctrl.userService.PostUser(dto)
+	userEntity := userDto.ToEntity()
+
+	userID, err := ctrl.userService.PostUser(userEntity)
 
 	if err != nil {
 		util.HandleUnexpectedError(c, err)
 	}
 
-	c.JSON(http.StatusCreated, user)
+	c.JSON(http.StatusCreated, gin.H{
+		"id": userID,
+	})
 }
 
 func (ctrl *userController) Put(c *gin.Context) {
 	id := c.Param("id")
 
-	var dto entities.User
-	if err := c.ShouldBind(&dto); err != nil {
+	userDto := new(dto.UserDTO)
+	if err := c.ShouldBind(userDto); err != nil {
 		c.JSON(http.StatusBadRequest, util.WrapHttpError(http.StatusBadRequest, "bad input", c.FullPath()))
 		return
 	}
 
-	err := ctrl.userService.PutUser(id, dto)
+	userEntity := userDto.ToEntity()
+
+	err := ctrl.userService.PutUser(id, userEntity)
 
 	if err != nil {
 		util.HandleUnexpectedError(c, err)
