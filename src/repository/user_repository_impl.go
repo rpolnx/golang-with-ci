@@ -68,8 +68,6 @@ func (r *mongoUserRepository) CreateUser(entity entities.User) (*mongo.InsertOne
 
 	collection := r.client.Database(r.database).Collection(userCollectionName)
 
-	entity.ID = primitive.NewObjectID()
-
 	return collection.InsertOne(ctx, entity)
 }
 
@@ -81,11 +79,12 @@ func (r *mongoUserRepository) UpsertUser(id primitive.ObjectID, entity entities.
 
 	filter := bson.M{"_id": id}
 
+	entity.UpdatedAt = time.Now()
+
 	upsertEntityArg := bson.M{
 		"$set": entity,
 		"$setOnInsert": bson.M{
 			"created_at": time.Now(),
-			"updated_at": time.Now(),
 		},
 	}
 

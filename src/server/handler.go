@@ -18,7 +18,9 @@ func InitializeServer() (*gin.Engine, error) {
 		return nil, err
 	}
 
-	userController := getUserController(userRepo)
+	userAdapter := adapter.InitializeUserAdapter(userRepo)
+	userService := service.InitializeUserService(userAdapter)
+	userController := controller.InitializeUserController(userService)
 
 	healthcheckController := controller.InitializeHealthcheckController()
 
@@ -26,11 +28,4 @@ func InitializeServer() (*gin.Engine, error) {
 	routes.AppendUserRoutes(r, userController)
 
 	return r, nil
-}
-
-func getUserController(userRepo repository.UserDBRepository) controller.UserController {
-	userAdapter := adapter.InitializeUserAdapter(userRepo)
-	userService := service.InitializeUserService(userAdapter)
-	userController := controller.InitializeUserController(userService)
-	return userController
 }

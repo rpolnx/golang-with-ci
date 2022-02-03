@@ -6,7 +6,7 @@ import (
 
 type User struct {
 	BaseEntity
-	ID   primitive.ObjectID `bson:"_id"`
+	ID   primitive.ObjectID `bson:"_id,omitempty"`
 	Name string             `bson:"name"`
 	Age  int                `bson:"age"`
 }
