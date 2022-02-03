@@ -1,4 +1,4 @@
-package mocks
+package service
 
 import (
 	"github.com/stretchr/testify/mock"
@@ -8,36 +8,36 @@ import (
 	"rpolnx.com.br/golang-with-ci/src/repository"
 )
 
-type UserRepositoryMock struct {
+type userRepositoryMock struct {
 	mock.Mock
 	repository.UserDBRepository
 }
 
-func (m *UserRepositoryMock) FindAllUsers() ([]entities.User, error) {
+func (m *userRepositoryMock) FindAllUsers() ([]entities.User, error) {
 	args := m.Called()
 	s, _ := args.Get(0).([]entities.User)
 	return s, args.Error(1)
 }
 
-func (m *UserRepositoryMock) FindUserById(id primitive.ObjectID) (*entities.User, error) {
+func (m *userRepositoryMock) FindUserById(id primitive.ObjectID) (*entities.User, error) {
 	args := m.Called(id)
 	s, _ := args.Get(0).(*entities.User)
 	return s, args.Error(1)
 }
 
-func (m *UserRepositoryMock) CreateUser(entity entities.User) (*mongo.InsertOneResult, error) {
+func (m *userRepositoryMock) CreateUser(entity entities.User) (*mongo.InsertOneResult, error) {
 	args := m.Called(entity)
 	s, _ := args.Get(0).(*mongo.InsertOneResult)
 	return s, args.Error(1)
 }
 
-func (m *UserRepositoryMock) UpsertUser(id primitive.ObjectID, entity entities.User) (*mongo.UpdateResult, error) {
+func (m *userRepositoryMock) UpsertUser(id primitive.ObjectID, entity entities.User) (*mongo.UpdateResult, error) {
 	args := m.Called(id, entity)
 	s, _ := args.Get(0).(*mongo.UpdateResult)
 	return s, args.Error(1)
 }
 
-func (m *UserRepositoryMock) DeleteUserById(id primitive.ObjectID) (*mongo.DeleteResult, error) {
+func (m *userRepositoryMock) DeleteUserById(id primitive.ObjectID) (*mongo.DeleteResult, error) {
 	args := m.Called(id)
 	s, _ := args.Get(0).(*mongo.DeleteResult)
 	return s, args.Error(1)

@@ -6,14 +6,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"rpolnx.com.br/golang-with-ci/src/service"
-	"rpolnx.com.br/golang-with-ci/test/mocks"
 	"testing"
 )
 
 //GetAllUsers
 func Test_ShouldGetUnexpectedErrorWhenGettingUsers(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase
@@ -33,7 +32,7 @@ func Test_ShouldGetUnexpectedErrorWhenGettingUsers(t *testing.T) {
 //GetAllUsers
 func Test_ShouldGetAListOfUsersWhenGettingUsers(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase
@@ -55,7 +54,7 @@ func Test_ShouldGetAListOfUsersWhenGettingUsers(t *testing.T) {
 //GetOneUser
 func Test_ShouldGetUnexpectedErrorWhenGettingOneUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase
@@ -76,7 +75,7 @@ func Test_ShouldGetUnexpectedErrorWhenGettingOneUser(t *testing.T) {
 //GetOneUser
 func Test_ShouldReceiveAnUserWhenGettingOneUserById(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase
@@ -96,7 +95,7 @@ func Test_ShouldReceiveAnUserWhenGettingOneUserById(t *testing.T) {
 //PostUser
 func Test_ShouldGetUnexpectedErrorWhenCreatingUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase
@@ -117,7 +116,7 @@ func Test_ShouldGetUnexpectedErrorWhenCreatingUser(t *testing.T) {
 //PostUser
 func Test_ShouldCreateAnUserWhenCreatingUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase
@@ -137,7 +136,7 @@ func Test_ShouldCreateAnUserWhenCreatingUser(t *testing.T) {
 //PutUser
 func Test_ShouldGetUnexpectedErrorWhenUpdatingAnUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase
@@ -158,7 +157,7 @@ func Test_ShouldGetUnexpectedErrorWhenUpdatingAnUser(t *testing.T) {
 //PutUser
 func Test_ShouldUpdateAnUserWhenReceiveValidId(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase
@@ -176,7 +175,7 @@ func Test_ShouldUpdateAnUserWhenReceiveValidId(t *testing.T) {
 //DeleteUser
 func Test_ShouldGetUnexpectedErrorWhenDeletingAnUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase
@@ -196,7 +195,7 @@ func Test_ShouldGetUnexpectedErrorWhenDeletingAnUser(t *testing.T) {
 //DeleteUser
 func Test_ShouldDeleteAnUserWhenReceiveValidID(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserAdapterMock)
+	adapterMock := new(userAdapterMock)
 	userService := service.InitializeUserService(adapterMock)
 
 	//Mock Setups Phase

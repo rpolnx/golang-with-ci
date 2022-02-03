@@ -7,14 +7,13 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"rpolnx.com.br/golang-with-ci/src/adapter"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
-	"rpolnx.com.br/golang-with-ci/test/mocks"
 	"testing"
 )
 
 //FindAllUsers
 func Test_ShouldGetUnexpectedErrorWhenGettingUsers(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -34,7 +33,7 @@ func Test_ShouldGetUnexpectedErrorWhenGettingUsers(t *testing.T) {
 //FindAllUsers
 func Test_ShouldGetAListOfUsersWhenGettingUsers(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -56,7 +55,7 @@ func Test_ShouldGetAListOfUsersWhenGettingUsers(t *testing.T) {
 //FindUserById
 func Test_ShouldGetInvalidIdErrorWhenGettingUserWithAnInvalidId(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -77,7 +76,7 @@ func Test_ShouldGetInvalidIdErrorWhenGettingUserWithAnInvalidId(t *testing.T) {
 //FindUserById
 func Test_ShouldGetUnexpectedErrorWhenGettingOneUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -98,7 +97,7 @@ func Test_ShouldGetUnexpectedErrorWhenGettingOneUser(t *testing.T) {
 //FindUserById
 func Test_ShouldReceiveAnUserWhenGettingOneUserById(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -118,7 +117,7 @@ func Test_ShouldReceiveAnUserWhenGettingOneUserById(t *testing.T) {
 //CreateUser
 func Test_ShouldGetIdErrorWhenCreatingUserAndDidntReceiveAnID(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -140,7 +139,7 @@ func Test_ShouldGetIdErrorWhenCreatingUserAndDidntReceiveAnID(t *testing.T) {
 //CreateUser
 func Test_ShouldGetUnexpectedErrorWhenCreatingUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -162,7 +161,7 @@ func Test_ShouldGetUnexpectedErrorWhenCreatingUser(t *testing.T) {
 //CreateUser
 func Test_ShouldCreateAnUserWhenCreatingUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -182,7 +181,7 @@ func Test_ShouldCreateAnUserWhenCreatingUser(t *testing.T) {
 //UpdateUser
 func Test_ShouldGetInvalidIdErrorErrorWhenUpdatingUserWithAnInvalidId(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -203,7 +202,7 @@ func Test_ShouldGetInvalidIdErrorErrorWhenUpdatingUserWithAnInvalidId(t *testing
 //UpdateUser
 func Test_ShouldGetUnexpectedErrorWhenUpdatingAnUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -224,7 +223,7 @@ func Test_ShouldGetUnexpectedErrorWhenUpdatingAnUser(t *testing.T) {
 //UpdateUser
 func Test_ShouldUpdateAnUserWhenReceiveValidIdEvenIfDoesntExists(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -243,7 +242,7 @@ func Test_ShouldUpdateAnUserWhenReceiveValidIdEvenIfDoesntExists(t *testing.T) {
 //UpdateUser
 func Test_ShouldUpdateAnUserWhenReceiveValidId(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -262,7 +261,7 @@ func Test_ShouldUpdateAnUserWhenReceiveValidId(t *testing.T) {
 //DeleteUserById
 func Test_ShouldGetInvalidIdErrorErrorWhenDeletingAnUserWithAnInvalidId(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -282,7 +281,7 @@ func Test_ShouldGetInvalidIdErrorErrorWhenDeletingAnUserWithAnInvalidId(t *testi
 //DeleteUserById
 func Test_ShouldGetUnexpectedErrorWhenDeletingAnUser(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -302,7 +301,7 @@ func Test_ShouldGetUnexpectedErrorWhenDeletingAnUser(t *testing.T) {
 //DeleteUserById
 func Test_ShouldSucceedDeletingAnExistingUserAnUserWhenReceiveValidID(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
@@ -320,7 +319,7 @@ func Test_ShouldSucceedDeletingAnExistingUserAnUserWhenReceiveValidID(t *testing
 //DeleteUserById
 func Test_ShouldSucceedDeletingANonExistingUserAnUserWhenReceiveAValidIdThatIsNotInTheDB(t *testing.T) {
 	// Initializations Phase
-	adapterMock := new(mocks.UserRepositoryMock)
+	adapterMock := new(userRepositoryMock)
 	userService := adapter.InitializeUserAdapter(adapterMock)
 
 	//Mock Setups Phase
