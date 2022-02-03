@@ -5,23 +5,18 @@ import (
 	"time"
 )
 
-const uri = "mongodb://root:password@localhost:27017/?authSource=admin"
-const timeout = 30
-const database = "golang-poc"
-
-type UserDBRepository interface {
+type UserDBRepository2 interface {
 	UserRepository
 }
 
-type mongoUserRepository struct {
+type mongoUserRepository2 struct {
 	client   *mongo.Client
 	database string
 	timeout  time.Duration
-	UserDBRepository
 }
 
-func InitializeUserDatabaseClient() (UserDBRepository, error) {
-	repo, err := newMongoUserRepository()
+func InitializeUserDatabaseClient2() (*mongoUserRepository2, error) {
+	repo, err := newMongoUserRepository2()
 
 	if err != nil {
 		return nil, err
@@ -30,8 +25,8 @@ func InitializeUserDatabaseClient() (UserDBRepository, error) {
 	return repo, nil
 }
 
-func newMongoUserRepository() (UserDBRepository, error) {
-	repo := &mongoUserRepository{
+func newMongoUserRepository2() (*mongoUserRepository2, error) {
+	repo := &mongoUserRepository2{
 		timeout:  time.Duration(timeout) * time.Second,
 		database: database,
 	}

@@ -79,3 +79,9 @@ func InitializeUserAdapter(userRepository repository.UserDBRepository) out.UserP
 		userRepository,
 	}
 }
+
+//func InitializeUserAdapter2(userRepository repository.UserDBRepository) out.UserPort {
+//	return &userAdapter{
+//		userRepository,
+//	}
+//}

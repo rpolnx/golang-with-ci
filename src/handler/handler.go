@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
-	"log"
 )
 
 const host = ""
@@ -31,10 +30,8 @@ func RegisterHooks(lifecycle fx.Lifecycle, h *Handler) {
 				serverHost := fmt.Sprintf("%s:%s", host, port)
 
 				fmt.Println("Starting application in ", serverHost)
-				go func() {
-					log.Fatal(h.Gin.Run(serverHost))
-				}()
-				return nil
+
+				return h.Gin.Run(serverHost)
 			},
 			OnStop: func(context.Context) error {
 				fmt.Println("Stopping application")
