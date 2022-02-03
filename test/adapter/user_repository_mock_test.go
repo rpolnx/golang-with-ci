@@ -4,6 +4,7 @@ import (
 	"github.com/stretchr/testify/mock"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"rpolnx.com.br/golang-with-ci/src/repository"
 )
@@ -13,7 +14,7 @@ type userRepositoryMock struct {
 	repository.UserDBRepository
 }
 
-func (m *userRepositoryMock) FindAllUsers() ([]entities.User, error) {
+func (m *userRepositoryMock) FindAllUsers(dto.PaginationDTO) ([]entities.User, error) {
 	args := m.Called()
 	s, _ := args.Get(0).([]entities.User)
 	return s, args.Error(1)

@@ -2,6 +2,7 @@ package service
 
 import (
 	"log"
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"rpolnx.com.br/golang-with-ci/src/ports/in"
 	"rpolnx.com.br/golang-with-ci/src/ports/out"
@@ -11,8 +12,8 @@ type userService struct {
 	userPort out.UserPort
 }
 
-func (s *userService) GetAllUsers() ([]entities.User, error) {
-	users, err := s.userPort.FindAllUsers()
+func (s *userService) GetAllUsers(pagination dto.PaginationDTO) ([]entities.User, error) {
+	users, err := s.userPort.FindAllUsers(pagination)
 
 	if err != nil {
 		log.Println("Error getting all users ", err)

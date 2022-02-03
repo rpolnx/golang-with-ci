@@ -1,9 +1,12 @@
 package out
 
-import "rpolnx.com.br/golang-with-ci/src/model/entities"
+import (
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
+	"rpolnx.com.br/golang-with-ci/src/model/entities"
+)
 
 type UserPort interface {
-	FindAllUsers() ([]entities.User, error)
+	FindAllUsers(dto.PaginationDTO) ([]entities.User, error)
 
 	FindUserById(id string) (*entities.User, error)
 

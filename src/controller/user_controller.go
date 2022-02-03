@@ -6,6 +6,7 @@ import (
 	"rpolnx.com.br/golang-with-ci/src/model/dto"
 	"rpolnx.com.br/golang-with-ci/src/ports/in"
 	"rpolnx.com.br/golang-with-ci/src/util"
+	"strconv"
 )
 
 type UserController interface {
@@ -21,7 +22,13 @@ type userController struct {
 }
 
 func (ctrl *userController) GetAll(c *gin.Context) {
-	users, err := ctrl.userService.GetAllUsers()
+
+	page, _ := strconv.ParseInt(c.DefaultQuery("page", "1"), 10, 64)
+	limit, _ := strconv.ParseInt(c.DefaultQuery("limit", "20"), 10, 64)
+
+	p := dto.PaginationDTO{Page: page, Limit: limit}
+
+	users, err := ctrl.userService.GetAllUsers(p)
 
 	if err != nil {
 		util.HandleUnexpectedError(c, err)

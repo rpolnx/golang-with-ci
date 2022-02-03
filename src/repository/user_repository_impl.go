@@ -6,6 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"time"
 )
@@ -13,7 +14,7 @@ import (
 const userCollectionName = "users"
 
 type UserRepository interface {
-	FindAllUsers() ([]entities.User, error)
+	FindAllUsers(dto.PaginationDTO) ([]entities.User, error)
 
 	FindUserById(id primitive.ObjectID) (*entities.User, error)
 
@@ -24,7 +25,7 @@ type UserRepository interface {
 	DeleteUserById(id primitive.ObjectID) (*mongo.DeleteResult, error)
 }
 
-func (r *mongoUserRepository) FindAllUsers() ([]entities.User, error) {
+func (r *mongoUserRepository) FindAllUsers(pagination dto.PaginationDTO) ([]entities.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), r.timeout)
 	defer cancel()
 
@@ -32,7 +33,9 @@ func (r *mongoUserRepository) FindAllUsers() ([]entities.User, error) {
 
 	users := make([]entities.User, 0)
 
-	cur, err := collection.Find(ctx, bson.M{})
+	paginationOptions := createPaginationOptions(pagination)
+
+	cur, err := collection.Find(ctx, bson.M{}, paginationOptions)
 
 	if err != nil {
 		return nil, err
@@ -68,6 +71,9 @@ func (r *mongoUserRepository) CreateUser(entity entities.User) (*mongo.InsertOne
 
 	collection := r.client.Database(r.database).Collection(userCollectionName)
 
+	entity.CreatedAt = time.Now()
+	entity.UpdatedAt = time.Now()
+
 	return collection.InsertOne(ctx, entity)
 }
 
@@ -79,12 +85,14 @@ func (r *mongoUserRepository) UpsertUser(id primitive.ObjectID, entity entities.
 
 	filter := bson.M{"_id": id}
 
+	entity.CreatedAt = time.Now()
 	entity.UpdatedAt = time.Now()
 
+	now := time.Now()
 	upsertEntityArg := bson.M{
 		"$set": entity,
 		"$setOnInsert": bson.M{
-			"created_at": time.Now(),
+			"created_at": &now,
 		},
 	}
 
@@ -105,4 +113,17 @@ func (r *mongoUserRepository) DeleteUserById(id primitive.ObjectID) (*mongo.Dele
 	filter := bson.M{"_id": id}
 
 	return collection.DeleteOne(ctx, filter)
+}
+
+func createPaginationOptions(pagination dto.PaginationDTO) (FindOptions *options.FindOptions) {
+	FindOptions = new(options.FindOptions)
+	FindOptions.SetLimit(pagination.Limit)
+
+	if pagination.Page == 0 || pagination.Page == 1 {
+		FindOptions.SetSkip(0)
+		return FindOptions
+	}
+
+	FindOptions.SetSkip((pagination.Page - 1) * pagination.Limit)
+	return FindOptions
 }

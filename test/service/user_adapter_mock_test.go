@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/stretchr/testify/mock"
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"rpolnx.com.br/golang-with-ci/src/ports/out"
 )
@@ -11,7 +12,7 @@ type userAdapterMock struct {
 	out.UserPort
 }
 
-func (m *userAdapterMock) FindAllUsers() ([]entities.User, error) {
+func (m *userAdapterMock) FindAllUsers(dto.PaginationDTO) ([]entities.User, error) {
 	args := m.Called()
 	s, _ := args.Get(0).([]entities.User)
 	return s, args.Error(1)

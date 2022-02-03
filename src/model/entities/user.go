@@ -5,8 +5,8 @@ import (
 )
 
 type User struct {
-	BaseEntity
-	ID   primitive.ObjectID `bson:"_id,omitempty"`
-	Name string             `bson:"name"`
-	Age  int                `bson:"age"`
+	BaseEntity `bson:",omitempty,inline"`
+	ID         primitive.ObjectID `bson:"_id,omitempty"`
+	Name       string             `bson:"name"`
+	Age        int                `bson:"age"`
 }

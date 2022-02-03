@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"rpolnx.com.br/golang-with-ci/src/service"
 	"testing"
@@ -19,7 +20,7 @@ func Test_ShouldGetUnexpectedErrorWhenGettingUsers(t *testing.T) {
 	adapterMock.On("FindAllUsers").Return(nil, errors.New("general error users"))
 
 	//Execution Phase
-	users, err := userService.GetAllUsers()
+	users, err := userService.GetAllUsers(dto.PaginationDTO{Page: 1, Limit: 10})
 
 	//Assert Phase
 	expectedErrorMsg := "general error users"
@@ -43,7 +44,7 @@ func Test_ShouldGetAListOfUsersWhenGettingUsers(t *testing.T) {
 	adapterMock.On("FindAllUsers").Return(data, nil)
 
 	//Execution Phase
-	users, err := userService.GetAllUsers()
+	users, err := userService.GetAllUsers(dto.PaginationDTO{Page: 1, Limit: 10})
 
 	//Assert Phase
 	assert.Nil(t, err)

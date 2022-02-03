@@ -1,9 +1,12 @@
 package in
 
-import "rpolnx.com.br/golang-with-ci/src/model/entities"
+import (
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
+	"rpolnx.com.br/golang-with-ci/src/model/entities"
+)
 
 type UserUsecase interface {
-	GetAllUsers() ([]entities.User, error)
+	GetAllUsers(dto.PaginationDTO) ([]entities.User, error)
 
 	GetOneUser(id string) (*entities.User, error)
 

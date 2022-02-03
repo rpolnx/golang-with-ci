@@ -6,6 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"rpolnx.com.br/golang-with-ci/src/adapter"
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"testing"
 )
@@ -20,7 +21,7 @@ func Test_ShouldGetUnexpectedErrorWhenGettingUsers(t *testing.T) {
 	adapterMock.On("FindAllUsers").Return(nil, errors.New("general error users"))
 
 	//Execution Phase
-	users, err := userService.FindAllUsers()
+	users, err := userService.FindAllUsers(dto.PaginationDTO{Page: 1, Limit: 10})
 
 	//Assert Phase
 	expectedErrorMsg := "general error users"
@@ -44,7 +45,7 @@ func Test_ShouldGetAListOfUsersWhenGettingUsers(t *testing.T) {
 	adapterMock.On("FindAllUsers").Return(data, nil)
 
 	//Execution Phase
-	users, err := userService.FindAllUsers()
+	users, err := userService.FindAllUsers(dto.PaginationDTO{Page: 1, Limit: 10})
 
 	//Assert Phase
 	assert.Nil(t, err)

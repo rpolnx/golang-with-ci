@@ -3,6 +3,7 @@ package adapter
 import (
 	"errors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"rpolnx.com.br/golang-with-ci/src/model/dto"
 	"rpolnx.com.br/golang-with-ci/src/model/entities"
 	"rpolnx.com.br/golang-with-ci/src/ports/out"
 	"rpolnx.com.br/golang-with-ci/src/repository"
@@ -12,8 +13,8 @@ type userAdapter struct {
 	userRepository repository.UserDBRepository
 }
 
-func (a userAdapter) FindAllUsers() ([]entities.User, error) {
-	return a.userRepository.FindAllUsers()
+func (a userAdapter) FindAllUsers(pagination dto.PaginationDTO) ([]entities.User, error) {
+	return a.userRepository.FindAllUsers(pagination)
 }
 
 func (a userAdapter) FindUserById(id string) (*entities.User, error) {
