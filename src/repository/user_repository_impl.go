@@ -85,7 +85,6 @@ func (r *mongoUserRepository) UpsertUser(id primitive.ObjectID, entity entities.
 
 	filter := bson.M{"_id": id}
 
-	entity.CreatedAt = time.Now()
 	entity.UpdatedAt = time.Now()
 
 	now := time.Now()
