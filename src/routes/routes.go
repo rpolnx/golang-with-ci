@@ -1,18 +1,18 @@
 package routes
 
 import (
-	"github.com/gin-gonic/gin"
 	"rpolnx.com.br/golang-with-ci/src/controller"
+	"rpolnx.com.br/golang-with-ci/src/handler"
 )
 
-func AppendHealthcheckRoutes(r *gin.Engine, healthcheckController controller.HealthcheckController) {
-	r.GET("/healthcheck", healthcheckController.GetHealthStatus)
+func NewHealthcheckRoutes(h *handler.Handler, healthcheckController controller.HealthcheckController) {
+	h.Gin.GET("/healthcheck", healthcheckController.GetHealthStatus)
 }
 
-func AppendUserRoutes(r *gin.Engine, userController controller.UserController) {
-	r.GET("/users", userController.GetAll)
-	r.GET("/users/:id", userController.GetOne)
-	r.POST("/users", userController.Post)
-	r.PUT("/users/:id", userController.Put)
-	r.DELETE("/users/:id", userController.Delete)
+func NewUserRoutes(h *handler.Handler, userController controller.UserController) {
+	h.Gin.GET("/users", userController.GetAll)
+	h.Gin.GET("/users/:id", userController.GetOne)
+	h.Gin.POST("/users", userController.Post)
+	h.Gin.PUT("/users/:id", userController.Put)
+	h.Gin.DELETE("/users/:id", userController.Delete)
 }

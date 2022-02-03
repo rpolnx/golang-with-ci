@@ -1,22 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	"go.uber.org/fx"
 	"rpolnx.com.br/golang-with-ci/src/server"
 )
 
-const host = ""
-const port = "8080"
-
 func main() {
-	serverContext, err := server.InitializeServer()
+	//serverContext, err := server.InitializeServer()
+	//
+	//if err != nil {
+	//	log.Fatal("Server failed to initialize with error: ", err)
+	//}
 
-	if err != nil {
-		log.Fatal("Server failed to initialize with error: ", err)
-	}
+	fx.New(
+		server.Module,
+	).Run()
 
-	fatalErr := serverContext.Run(fmt.Sprintf("%s:%s", host, port))
-
-	log.Fatal("Server crash with error: ", fatalErr)
+	//fatalErr := serverContext.Run(fmt.Sprintf("%s:%s", host, port))
+	//
+	//log.Fatal("Server crash with error: ", fatalErr)
 }
