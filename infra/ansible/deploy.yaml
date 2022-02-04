@@ -12,7 +12,14 @@
     - name: Copy docker compose
       copy:
         src: ./infra/docker-compose-prd.yaml
-        dest: /data/docker-compose-prd.yaml
+        dest: /data/docker-compose.yaml
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
+    - name: Copy env files
+      copy:
+        src: ./.env.production
+        dest: /data/.env.production
         owner: ubuntu
         group: ubuntu
         mode: 0644
@@ -20,6 +27,6 @@
       docker_compose:
         project_src: ../../
         files:
-          - docker-compose-prd.yaml
+          - docker-compose.yaml
       environment:
         APP_VERSION: "{{ version }}"
