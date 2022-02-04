@@ -18,9 +18,11 @@ jobs:
         uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: deploy.yaml
-          directory: ./infra/ansible
+          directory: ./infra/ansible/
+          inventory: |
+            [aws_lightsail]
+            ${{secrets.ANSIBLE_INSTANCE_IP}} ansible_connection=ssh ansible_ssh_user=ubuntu
           key: ${{secrets.SSH_LIGHTSAIL_DEV_KEY}}
-          inventory: ${{secrets.ANSIBLE_HOSTS}}
           options: |
             --extra-vars image=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
             --extra-vars version=${{ github.event.inputs.image-version }}
