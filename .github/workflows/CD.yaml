@@ -14,11 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build env file
-        run: |
-          echo -n ${{secrets.ENV_PRODUCTION}} >> .env.production
-          cat .env.production
-
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
