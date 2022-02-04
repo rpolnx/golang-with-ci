@@ -22,9 +22,7 @@ jobs:
         with:
           playbook: deploy.yaml
           directory: /data
-          inventory: |
-            [aws_lightsail]
-            ${{secrets.ANSIBLE_INSTANCE_IP}} ansible_connection=ssh ansible_ssh_user=ubuntu
+          inventory: ${{secrets.ANSIBLE_HOSTS}}
           key: ${{secrets.SSH_LIGHTSAIL_DEV_KEY}}
           options: |
             --extra-vars image=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
