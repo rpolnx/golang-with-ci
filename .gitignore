@@ -461,3 +461,5 @@ MigrationBackup/
 .ionide/
 
 .terraform
+report.json
+coverage.out

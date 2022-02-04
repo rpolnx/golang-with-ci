@@ -1,0 +1,29 @@
+name: "Golang CD"
+
+on:
+  workflow_dispatch:
+    inputs:
+      image-version:
+        description: "Image version deploy"
+        required: yes
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: deploy.yaml
+          directory: ./infra/ansible
+          key: ${{secrets.SSH_LIGHTSAIL_DEV_KEY}}
+          inventory: ${{secrets.ANSIBLE_HOSTS}}
+          options: |
+            --extra-vars image=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
+            --extra-vars version=${{ github.event.inputs.image-version }}
+            --extra-vars username=${{ secrets.DOCKERHUB_USERNAME }}
+            --extra-vars password=${{ secrets.DOCKERHUB_PASSWORD }}
+            --verbose

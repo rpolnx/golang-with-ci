@@ -4,23 +4,15 @@
   gather_facts: false
   become: true
   vars:
-    image: "mongo"
     version: "latest"
 
   tasks:
-    # - name: Override docker-compose version
-    #   replace:
-    #     path: ./docker-compose.yml
-    #     replace: '\g<1>{{ version }}'
-    #     regexp: '^(\s+image: {{ image }}:)(.*)'
-
     # In case of error, install docker from py3
     # https://stackoverflow.com/questions/59384708/ansible-returns-with-failed-to-import-the-required-python-library-docker-sdk-f
     - name: Deploy Docker Compose stack
       docker_compose:
         project_src: ../../
         files:
-          - docker-compose.yaml
+          - docker-compose-prd.yaml
       environment:
-        IMAGE_NAME: "{{ image }}"
-        IMAGE_VERSION: "{{ version }}"
+        APP_VERSION: "{{ version }}"
