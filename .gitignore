@@ -460,6 +460,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-.terraform
+.terraform/
+.terraform.lock.hcl
+
 report.json
 coverage.out
