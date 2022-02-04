@@ -7,8 +7,6 @@
     version: "latest"
 
   tasks:
-    # In case of error, install docker from py3
-    # https://stackoverflow.com/questions/59384708/ansible-returns-with-failed-to-import-the-required-python-library-docker-sdk-f
     - name: Copy docker compose
       copy:
         src: ./infra/docker-compose-prd.yaml
@@ -25,7 +23,7 @@
         mode: 0644
     - name: Deploy Docker Compose stack
       docker_compose:
-        project_src: ../../
+        project_src: /data
         files:
           - docker-compose.yaml
       environment:
