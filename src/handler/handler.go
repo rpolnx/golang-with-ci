@@ -5,10 +5,8 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
+	"os"
 )
-
-const host = ""
-const port = "8080"
 
 type Handler struct {
 	Gin *gin.Engine
@@ -27,7 +25,7 @@ func RegisterHooks(lifecycle fx.Lifecycle, h *Handler) {
 	lifecycle.Append(
 		fx.Hook{
 			OnStart: func(context.Context) error {
-				serverHost := fmt.Sprintf("%s:%s", host, port)
+				serverHost := fmt.Sprintf("%s:%s", os.Getenv("APP_HOST"), os.Getenv("APP_PORT"))
 
 				fmt.Println("Starting application in ", serverHost)
 
