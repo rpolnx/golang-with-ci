@@ -1,0 +1,2 @@
+[aws_lightsail]
+54.85.247.86 ansible_connection=ssh ansible_ssh_user=ubuntu

@@ -5,25 +5,33 @@
   become: true
   vars:
     version: "latest"
+    user: "ubuntu"
 
   tasks:
+    - name: Creates mongo data
+      file:
+        path: /data
+        state: directory
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: 0775
+    - name: Creates application folder
+      file:
+        path: /usr/app
+        state: directory
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: 0775
     - name: Copy docker compose
       copy:
         src: ../docker-compose-prd.yaml
-        dest: /data/docker-compose.yaml
-        owner: ubuntu
-        group: ubuntu
-        mode: 0644
-    - name: Copy env files
-      copy:
-        src: ../../.env.production
-        dest: /data/.env.production
-        owner: ubuntu
-        group: ubuntu
+        dest: /usr/app/docker-compose.yaml
+        owner: "{{ user }}"
+        group: "{{ user }}"
         mode: 0644
     - name: Deploy Docker Compose stack
       docker_compose:
-        project_src: /data
+        project_src: /usr/app
         files:
           - docker-compose.yaml
       environment:
