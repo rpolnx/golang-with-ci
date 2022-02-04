@@ -5,9 +5,7 @@ services:
     restart: always
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+    env_file: .env
     volumes:
       - /data/ra/mongodb:/data/db:rw
   application:
@@ -17,6 +15,7 @@ services:
     restart: always
     ports:
       - "8080:8080"
-    environment:
-      GIN_MODE: release
-      MONGO_URI: "mongodb://root:password@mongodb:27017/?authSource=admin"
+    env_file: .env
+#    environment:
+#      GIN_MODE: release
+#      MONGO_URI: "mongodb://root:password@mongodb:27017/?authSource=admin"

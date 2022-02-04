@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    env_file: .env.production
+    volumes:
+      - /data/:/data/db:rw
+  application:
+    image: mongo
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file: .env.production
