@@ -3,9 +3,12 @@ package handler
 import (
 	"context"
 	"fmt"
+	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
 	"os"
+	"rpolnx.com.br/golang-with-ci/src/util"
+	"time"
 )
 
 type Handler struct {
@@ -14,9 +17,12 @@ type Handler struct {
 
 // NewHandler returns a new gin router
 func NewHandler() *Handler {
-	r := gin.Default()
+	engine := gin.New()
 
-	handler := Handler{Gin: r}
+	engine.Use(ginzap.Ginzap(util.NamedLogger, time.RFC3339, true))
+	engine.Use(ginzap.RecoveryWithZap(util.NamedLogger, true))
+
+	handler := Handler{Gin: engine}
 
 	return &handler
 }
@@ -25,14 +31,22 @@ func RegisterHooks(lifecycle fx.Lifecycle, h *Handler) {
 	lifecycle.Append(
 		fx.Hook{
 			OnStart: func(context.Context) error {
-				serverHost := fmt.Sprintf("%s:%s", os.Getenv("APP_HOST"), os.Getenv("APP_PORT"))
+				host := os.Getenv("APP_HOST")
+				port := os.Getenv("APP_PORT")
 
-				fmt.Println("Starting application in ", serverHost)
+				if port == "" {
+					port = "8080"
+				}
+				serverHost := fmt.Sprintf("%s:%s", host, port)
 
-				return h.Gin.Run(serverHost)
+				util.Logger.Info("Starting application in ", serverHost)
+
+				go h.Gin.Run(serverHost)
+
+				return nil
 			},
 			OnStop: func(context.Context) error {
-				fmt.Println("Stopping application")
+				util.Logger.Info("Stopping application")
 				return nil
 			},
 		},
