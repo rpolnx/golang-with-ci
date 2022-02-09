@@ -8,6 +8,7 @@ import (
 	"rpolnx.com.br/golang-with-ci/src/repository"
 	"rpolnx.com.br/golang-with-ci/src/routes"
 	"rpolnx.com.br/golang-with-ci/src/service"
+	"rpolnx.com.br/golang-with-ci/src/util"
 )
 
 var RepositoryModule = fx.Options(fx.Provide(repository.InitializeUserDatabaseClient))
@@ -28,5 +29,6 @@ var HandlerModule = fx.Options(fx.Provide(handler.NewHandler))
 var Module = fx.Options(
 	HandlerModule,
 	RoutesModule,
+	fx.Invoke(util.NewLoggers),
 	fx.Invoke(handler.RegisterHooks),
 )

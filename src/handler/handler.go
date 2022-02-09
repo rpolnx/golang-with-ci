@@ -19,8 +19,15 @@ type Handler struct {
 func NewHandler() *Handler {
 	engine := gin.New()
 
-	engine.Use(ginzap.Ginzap(util.NamedLogger, time.RFC3339, true))
-	engine.Use(ginzap.RecoveryWithZap(util.NamedLogger, true))
+	isLocal := os.Getenv("IS_LOCAL")
+
+	if isLocal != "" {
+		engine.Use(ginzap.Ginzap(util.NamedLogger, time.RFC3339, true))
+		engine.Use(ginzap.RecoveryWithZap(util.NamedLogger, true))
+	} else {
+		engine.Use(gin.Logger())
+		engine.Use(gin.Recovery())
+	}
 
 	handler := Handler{Gin: engine}
 
