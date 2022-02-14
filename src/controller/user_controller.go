@@ -24,11 +24,11 @@ type userController struct {
 // GetAll godoc
 // @Summary      Get all accounts
 // @Description  Get all accounts
-// @Tags         users
+// @Tags         Users
 // @Accept       json
 // @Produce      json
-// @Param        page    query     int  false  "Page value"
-// @Param        limit    query     int  false  "Limit"
+// @Param        page    	query     int  false  "Page value"
+// @Param        limit    	query     int  false  "Limit"
 // @Success      200  {object}  dto.UserDtoList
 // @Failure      400  {object}  dto.ErrorDTO
 // @Failure      404  {object}  dto.ErrorDTO
@@ -56,15 +56,15 @@ func (ctrl *userController) GetAll(c *gin.Context) {
 // GetOne godoc
 // @Summary      Get accounts by id
 // @Description  Get accounts by id
-// @Tags         users
+// @Tags         Users
 // @Accept       json
 // @Produce      json
-// @Param        page    path     string  true  "id of user"
+// @Param        id    path     string  true  "id of user"
 // @Success      200  {object}  dto.UserDtoList
 // @Failure      400  {object}  dto.ErrorDTO
 // @Failure      404  {object}  dto.ErrorDTO
 // @Failure      500  {object}  dto.ErrorDTO
-// @Router       /users [get]
+// @Router       /users/{id} [get]
 func (ctrl *userController) GetOne(c *gin.Context) {
 	id := c.Param("id")
 

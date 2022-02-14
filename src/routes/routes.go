@@ -22,8 +22,9 @@ func NewUserRoutes(h *handler.Handler, userController controller.UserController)
 }
 
 func NewSwaggerRoutes(h *handler.Handler) {
-	docs.SwaggerInfo_swagger.Title = ""
-	util.Logger.Info("Generating docs from", docs.SwaggerInfo_swagger.Title)
+	util.Logger.Infof("Generating docs from %s", docs.SwaggerInfo_swagger.Title)
 
-	h.Gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	wrapHandler := ginSwagger.WrapHandler(swaggerFiles.Handler)
+
+	h.Gin.GET("/swagger/*any", wrapHandler)
 }
