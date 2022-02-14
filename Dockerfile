@@ -18,7 +18,7 @@ RUN groupadd -g 1001 $GROUP && \
 USER $USER
 
 COPY --chown=1001:1001 main .
-#COPY --chown=1001:1001 application.yml .
+COPY --chown=1001:1001 ./docs ./
 
 EXPOSE 8080
 

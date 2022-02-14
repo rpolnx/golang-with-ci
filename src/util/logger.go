@@ -52,3 +52,7 @@ func NewLoggers() {
 	Logger = getLogger(isLocal)
 	NamedLogger = getNamedLogger(isLocal)
 }
+
+func init() {
+	NewLoggers()
+}

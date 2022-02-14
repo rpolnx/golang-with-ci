@@ -22,6 +22,7 @@ var ControllerModule = fx.Options(ServiceModule,
 var RoutesModule = fx.Options(ControllerModule,
 	fx.Invoke(routes.NewHealthcheckRoutes),
 	fx.Invoke(routes.NewUserRoutes),
+	fx.Invoke(routes.NewSwaggerRoutes),
 )
 
 var HandlerModule = fx.Options(fx.Provide(handler.NewHandler))

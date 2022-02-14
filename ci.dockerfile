@@ -12,6 +12,7 @@ RUN export CGO_ENABLED=1
 RUN export GOCACHE="/go/pkg/mod"
 
 RUN go mod download -x
+RUN go install github.com/swaggo/swag/cmd/swag@latest
 
 
 FROM golang:1.17.3-buster as builder
@@ -28,10 +29,15 @@ RUN export CGO_ENABLED=1
 RUN export GOCACHE="/go/pkg/mod"
 
 COPY --chown=1001:1001 --from=installer /go/pkg/mod /go/pkg/mod
+COPY --chown=1001:1001 --from=installer /go/bin/swag /go/bin/swag
 
-COPY . .
+COPY *.go ./
+COPY src ./src
+COPY test ./test
 
 RUN go test -v ./test/...
+
+RUN /go/bin/swag init -g main.go
 RUN go build main.go
 
 
@@ -53,7 +59,7 @@ RUN groupadd -g 1001 $GROUP && \
 USER $USER
 
 COPY --chown=1001:1001 --from=builder /usr/app/main .
-#COPY --chown=1001:1001 ./application.yml .
+COPY --chown=1001:1001 --from=builder /usr/app/docs ./
 
 EXPOSE 8080
 
