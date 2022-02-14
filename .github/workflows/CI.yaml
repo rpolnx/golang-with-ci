@@ -22,7 +22,7 @@ jobs:
           go-version: "^1.17.6"
 
       - name: Install dependencies
-        run: go get -d -v ./...
+        run: go mod download -x
 
       - name: Install swag cli
         run: go install github.com/swaggo/swag/cmd/swag@latest
