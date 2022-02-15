@@ -465,4 +465,5 @@ MigrationBackup/
 
 report.json
 coverage.out
-docs/
+docs/swagger.yaml
+docs/swagger.json

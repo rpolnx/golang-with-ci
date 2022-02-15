@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"rpolnx.com.br/golang-with-ci/docs"
@@ -14,17 +15,26 @@ func NewHealthcheckRoutes(h *handler.Handler, healthcheckController controller.H
 }
 
 func NewUserRoutes(h *handler.Handler, userController controller.UserController) {
-	h.Gin.GET("/users", userController.GetAll)
-	h.Gin.GET("/users/:id", userController.GetOne)
-	h.Gin.POST("/users", userController.Post)
-	h.Gin.PUT("/users/:id", userController.Put)
-	h.Gin.DELETE("/users/:id", userController.Delete)
+	group := h.Gin.Group("/users")
+	{
+		group.GET("/", userController.GetAll)
+		group.GET("/:id", userController.GetOne)
+		group.POST("/", userController.Post)
+		group.PUT("/:id", userController.Put)
+		group.DELETE("/:id", userController.Delete)
+	}
+
 }
 
 func NewSwaggerRoutes(h *handler.Handler) {
 	util.Logger.Infof("Generating docs from %s", docs.SwaggerInfo_swagger.Title)
 
-	wrapHandler := ginSwagger.WrapHandler(swaggerFiles.Handler)
+	h.Gin.GET("/swagger/*any", func(c *gin.Context) {
+		if c.Request.URL.Path == "" {
+			c.Redirect(301, "/swagger/index.html")
+			return
+		}
 
-	h.Gin.GET("/swagger/*any", wrapHandler)
+		ginSwagger.WrapHandler(swaggerFiles.Handler)(c)
+	})
 }
