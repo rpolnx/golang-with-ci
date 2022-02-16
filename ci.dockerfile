@@ -9,7 +9,7 @@ COPY go.* ./
 RUN export GOOS=linux
 RUN export GOARCH=amd64
 RUN export CGO_ENABLED=1
-RUN export GOCACHE="/go/pkg/mod"
+RUN export GOMODCACHE="/go/pkg/mod"
 
 RUN go mod download -x
 RUN go install github.com/swaggo/swag/cmd/swag@latest
@@ -26,7 +26,7 @@ COPY go.* ./
 RUN export GOOS=linux
 RUN export GOARCH=amd64
 RUN export CGO_ENABLED=1
-RUN export GOCACHE="/go/pkg/mod"
+RUN export GOMODCACHE="/go/pkg/mod"
 
 COPY --chown=1001:1001 --from=installer /go/pkg/mod /go/pkg/mod
 COPY --chown=1001:1001 --from=installer /go/bin/swag /go/bin/swag
